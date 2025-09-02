@@ -1,6 +1,14 @@
 
 import { GoogleGenAI, Modality } from "@google/genai";
 
+const API_KEY = process.env.API_KEY;
+
+if (!API_KEY) {
+  throw new Error("API_KEY environment variable not set");
+}
+
+const ai = new GoogleGenAI({ apiKey: API_KEY });
+
 const buildPrompt = (productName: string): string => {
   return `
 **PRIMARY DIRECTIVE: 100% FAITHFUL PHOTO-REALISTIC TRANSPLANT**
@@ -46,13 +54,6 @@ export const generateProductPhotoFromImage = async (
     bowlImageData: {mimeType: string, data: string},
     productName: string
   ): Promise<string> => {
-
-  const API_KEY = process.env.API_KEY;
-  if (!API_KEY) {
-    throw new Error("API Key not found. Please set the API_KEY environment variable in your deployment environment.");
-  }
-
-  const ai = new GoogleGenAI({ apiKey: API_KEY });
   const prompt = buildPrompt(productName);
 
   const bowlImagePart = {
