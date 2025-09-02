@@ -1,6 +1,5 @@
 
 import { GoogleGenAI, Modality } from "@google/genai";
-import { API_KEY } from '../config';
 
 const buildPrompt = (productName: string): string => {
   return `
@@ -48,8 +47,9 @@ export const generateProductPhotoFromImage = async (
     productName: string
   ): Promise<string> => {
 
-  if (!API_KEY || API_KEY === "YOUR_GOOGLE_AI_API_KEY_HERE") {
-    throw new Error("API Key not found. Please add your Google AI API key to the config.ts file.");
+  const API_KEY = process.env.API_KEY;
+  if (!API_KEY) {
+    throw new Error("API Key not found. Please set the API_KEY environment variable in your deployment environment.");
   }
 
   const ai = new GoogleGenAI({ apiKey: API_KEY });
