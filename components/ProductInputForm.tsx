@@ -114,6 +114,8 @@ interface ProductInputFormProps {
   bowlFile: File | null;
   productName: string;
   onProductNameChange: (name: string) => void;
+  productDescription: string;
+  onProductDescriptionChange: (desc: string) => void;
   downloadFileName: string;
   onDownloadFileNameChange: (name: string) => void;
   onGenerate: () => void;
@@ -127,6 +129,8 @@ export const ProductInputForm: React.FC<ProductInputFormProps> = ({
   bowlFile,
   productName,
   onProductNameChange,
+  productDescription,
+  onProductDescriptionChange,
   downloadFileName,
   onDownloadFileNameChange,
   onGenerate,
@@ -157,9 +161,24 @@ export const ProductInputForm: React.FC<ProductInputFormProps> = ({
           className="mt-2 block w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-800/50"
         />
       </div>
-      
+
+      <div>
+        <label htmlFor="product-description-input" className="text-lg font-semibold text-gray-300">
+          3. Add a Description (Optional)
+        </label>
+        <textarea
+          id="product-description-input"
+          rows={3}
+          value={productDescription}
+          onChange={(e) => onProductDescriptionChange(e.target.value)}
+          placeholder="e.g., High-quality, long-thread saffron with a deep red color."
+          disabled={isLoading}
+          className="mt-2 block w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-800/50"
+        />
+      </div>
+
       <ImageUploader 
-        title="3. Upload Bowl Image"
+        title="4. Upload Bowl Image"
         id="bowl-image-upload"
         selectedFile={bowlFile}
         onFileSelect={onBowlFileSelect}
@@ -168,7 +187,7 @@ export const ProductInputForm: React.FC<ProductInputFormProps> = ({
 
       <div>
         <label htmlFor="filename-input" className="text-lg font-semibold text-gray-300">
-          4. Set Download Filename (Optional)
+          5. Set Download Filename (Optional)
         </label>
         <input
           type="text"

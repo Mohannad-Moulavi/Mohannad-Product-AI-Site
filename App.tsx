@@ -21,6 +21,7 @@ const App: React.FC = () => {
   const [productFile, setProductFile] = useState<File | null>(null);
   const [bowlFile, setBowlFile] = useState<File | null>(null);
   const [productName, setProductName] = useState<string>('');
+  const [productDescription, setProductDescription] = useState<string>('');
   const [downloadFileName, setDownloadFileName] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
@@ -39,7 +40,7 @@ const App: React.FC = () => {
     try {
       const productImageData = await fileToGenerativePart(productFile);
       const bowlImageData = await fileToGenerativePart(bowlFile);
-      const generatedImageData = await generateProductPhotoFromImage(productImageData, bowlImageData, productName);
+      const generatedImageData = await generateProductPhotoFromImage(productImageData, bowlImageData, productName, productDescription);
       setGeneratedImage(generatedImageData);
     } catch (err) {
       console.error(err);
@@ -47,17 +48,17 @@ const App: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [productFile, bowlFile, productName]);
+  }, [productFile, bowlFile, productName, productDescription]);
   
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 flex flex-col items-center justify-center font-sans p-4">
       <div className="w-full max-w-4xl mx-auto">
         <header className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-100 tracking-tight">
-            Mohannad Product AI Site
+            AI Product Photos for Nuts & Dried Fruits
           </h1>
           <p className="mt-3 text-lg text-gray-400 max-w-2xl mx-auto">
-            Upload your product and your bowl to create consistent, professional product shots.
+            Instantly create professional photos. Just upload your product and a bowl, and let AI do the rest.
           </p>
         </header>
 
@@ -70,6 +71,8 @@ const App: React.FC = () => {
               onBowlFileSelect={setBowlFile}
               productName={productName}
               onProductNameChange={setProductName}
+              productDescription={productDescription}
+              onProductDescriptionChange={setProductDescription}
               downloadFileName={downloadFileName}
               onDownloadFileNameChange={setDownloadFileName}
               onGenerate={handleGenerate}

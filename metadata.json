@@ -1,5 +1,5 @@
 {
-  "name": "Mohannad Product AI Site",
-  "description": "Generate professional e-commerce product photos. Upload an image of a product, and the app will place it inside a consistent, high-quality wooden bowl with perfect studio lighting and a pure white background.",
+  "name": "AI Product Photos for Nuts & Dried Fruits",
+  "description": "Create professional e-commerce photos for dried fruit and nut products. Simply upload an image of your product and an image of a bowl, and our AI will realistically place the product in the bowl with perfect studio lighting and a pure white background. You can add an optional description to guide the AI for more accurate results.",
   "requestFramePermissions": []
 }
