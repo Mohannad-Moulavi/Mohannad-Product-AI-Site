@@ -10,29 +10,28 @@ const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 const buildPrompt = (productName: string, productDescription: string): string => {
   const descriptionText = productDescription 
-    ? `\n\n**Product Description:**\n${productDescription}` 
+    ? `\n**User Instructions:**\n${productDescription}` 
     : '';
 
   return `
-**Your Task: Photorealistic Product Compositing**
+**TASK: DIRECT IMAGE COMPOSITE**
 
 You will be given two images:
-1. An image of a product, '${productName}'.
-2. An image of a bowl with studio lighting.
+1.  An image of a product, '${productName}'.
+2.  An image of an empty bowl.
+
+**ABSOLUTE RULE: YOU MUST NOT CHANGE THE PRODUCT IMAGE.**
+Your task is to perform a direct 'copy and paste' operation.
+
+1.  **SELECT & COPY:** Select a portion of the product from the product image.
+2.  **PASTE:** Paste the copied, **unaltered** product portion directly into the bowl from the bowl image.
+3.  **NO MODIFICATION:** Do not generate, enhance, repaint, or change the color, texture, or lighting of the product pixels in any way. Treat it as a fixed object.
+4.  **SHADOWS ONLY:** The only generative work you are allowed to do is add realistic shadows **inside the bowl** cast *by* the product. These shadows must match the existing lighting of the bowl image.
+5.  **BACKGROUND:** The final image must have a pure, solid white (#FFFFFF) background, consistent with the bowl image.
+6.  **BOWL:** Do not change the bowl.
+
+**Final Output:** A high-resolution PNG image with a 1:1 aspect ratio, showing the original, unchanged product placed realistically inside the bowl.
 ${descriptionText}
-
-**Your only goal is to realistically place the product from the first image into the bowl from the second image.**
-
-**CRITICAL INSTRUCTIONS (DO NOT DEVIATE):**
-
-1.  **PRESERVE THE PRODUCT:** You **MUST NOT** change the appearance of the product. It must look exactly like it does in the source image. Do not alter its color, texture, shape, or any other visual characteristic. Use the optional description to better understand the product if needed, but the source image is the ground truth.
-2.  **SEAMLESS INTEGRATION:** Place the product inside the bowl. The final image must be photorealistic.
-3.  **MATCH LIGHTING & SHADOWS:** The lighting and shadows on the product must perfectly match the existing studio lighting on the bowl. The product should cast realistic shadows inside the bowl.
-4.  **DO NOT CHANGE THE BOWL:** The bowl image is the master template. Do not alter it in any way.
-5.  **MAINTAIN BACKGROUND:** The final image must have a pure, solid white (#FFFFFF) background, consistent with the bowl image.
-
-**Final Output:**
-A single, high-resolution PNG image with a 1:1 aspect ratio. The image should be a seamless, photorealistic composition of the original product inside the original bowl.
   `;
 };
 
